@@ -7,9 +7,10 @@ body,
 :root {
   height: 100%;
   color-scheme: dark;
-  background: linear-gradient(
+  background: black;
+  /* background: linear-gradient(
       to bottom,
       transparent,
       #1ED76015
-    )
+    ) */
 }
