@@ -7,6 +7,7 @@ import SupabaseProvider from '@/providers/SupabaseProvider';
 import UserProvider from '@/providers/UserProvider';
 import ModalProvider from '@/providers/ModalProvider';
 import { Toaster } from 'sonner';
+import getSongsByUserId from '@/actions/getSongsByUserId';
 
 const inter = Figtree({ subsets: ['latin'] });
 
@@ -15,11 +16,14 @@ export const metadata: Metadata = {
   description: 'Music web app, enjoy listening to music, here on spotify',
 };
 
-export default function RootLayout({
+export const revalidate = 0;
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userSongs = await getSongsByUserId();
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -27,7 +31,7 @@ export default function RootLayout({
         <SupabaseProvider>
           <UserProvider>
             <ModalProvider />
-            <Sidebar>{children}</Sidebar>
+            <Sidebar songs={userSongs}>{children}</Sidebar>
           </UserProvider>
         </SupabaseProvider>
       </body>
