@@ -11,7 +11,7 @@ type UserContextType = {
   user: User | null;
   userDetails: UserDetails | null;
   isLoading: boolean;
-  subscription: Subscription;
+  subscription: Subscription | null;
 };
 
 export const UserContext = createContext<UserContextType | undefined>(
@@ -35,7 +35,6 @@ export const MyUserContextProvider = (props: Props) => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   const getUserDetails = () => supabase.from('users').select('*').single();
-
   const getSubscription = () =>
     supabase
       .from('subscriptions')
@@ -54,9 +53,11 @@ export const MyUserContextProvider = (props: Props) => {
           if (userDetailsPromise.status === 'fulfilled') {
             setUserDetails(userDetailsPromise.value.data as UserDetails);
           }
+
           if (subscriptionPromise.status === 'fulfilled') {
             setSubscription(subscriptionPromise.value.data as Subscription);
           }
+
           setIsLoadingData(false);
         }
       );
@@ -79,7 +80,7 @@ export const MyUserContextProvider = (props: Props) => {
 
 export const useUser = () => {
   const context = useContext(UserContext);
-  if (context == undefined) {
+  if (context === undefined) {
     throw new Error('useUser must be used within a MyUserContextProvider');
   }
   return context;
