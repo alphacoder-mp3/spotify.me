@@ -6,6 +6,8 @@ interface PlayerStore {
   setId: (id: string) => void;
   setIds: (ids: string[]) => void;
   reset: () => void;
+  isPlaying: boolean;
+  setIsPlaying: (playing: boolean) => void;
 }
 
 const usePlayer = create<PlayerStore>(set => ({
@@ -14,6 +16,8 @@ const usePlayer = create<PlayerStore>(set => ({
   setId: (id: string) => set({ activeId: id }),
   setIds: (ids: string[]) => set({ ids: ids }),
   reset: () => set({ ids: [], activeId: undefined }),
+  isPlaying: false,
+  setIsPlaying: (playing: boolean) => set({ isPlaying: playing }),
 }));
 
 export default usePlayer;

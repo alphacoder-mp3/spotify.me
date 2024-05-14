@@ -2,6 +2,7 @@ import { Song } from '@/types';
 import useLoadImage from '@/hooks/useLoadImage';
 import Image from 'next/image';
 import PlayButton from './PlayButton';
+import usePlayer from '@/hooks/usePlayer';
 
 interface SongItemProps {
   data: Song;
@@ -10,6 +11,8 @@ interface SongItemProps {
 
 const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
   const imagePath = useLoadImage(data);
+  const player = usePlayer();
+
   return (
     <div
       onClick={() => onClick(data.id)}
@@ -32,7 +35,9 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
         </p>
       </div>
       <div className="absolute bottom-24 right-5">
-        <PlayButton />
+        <PlayButton
+          ifActiveSong={player.isPlaying && player.activeId === data.id}
+        />
       </div>
     </div>
   );
