@@ -6,6 +6,7 @@ import { useUser } from '@/hooks/useUser';
 import MediaItem from '@/components/MediaItem';
 import LikeButton from '@/components/LikeButton';
 import useOnPlay from '@/hooks/useOnPlay';
+// import Image from 'next/image';
 
 interface LikedContentProps {
   songs: Song[];
@@ -32,8 +33,15 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
   }
   return (
     <div className="flex flex-col gap-y-2 w-full p-6">
-      {songs.map(song => (
+      {songs.map((song, idx) => (
         <div key={song.id} className="flex items-center gap-x-4 w-full">
+          <div className="text-neutral-400 hover:invisible"> {idx + 1}</div>
+          {/* <Image
+            src="https://open.spotifycdn.com/cdn/images/equaliser-animated-green.f5eb96f2.gif"
+            alt="player"
+            width="20"
+            height="20"
+          /> */}
           <div className="flex-1">
             <MediaItem
               onClick={(id: string) => {
